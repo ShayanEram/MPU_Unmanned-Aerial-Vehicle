@@ -7,7 +7,7 @@
 
 class MotorController {
 public:
-    MotorController();
+    explicit MotorController();
     ~MotorController();
 
     void start();

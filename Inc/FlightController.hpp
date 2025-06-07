@@ -7,7 +7,7 @@
 
 class FlightController {
 public:
-    FlightController();
+    explicit FlightController();
     ~FlightController();
 
     void start();

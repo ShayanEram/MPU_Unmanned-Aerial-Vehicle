@@ -7,7 +7,7 @@
 
 class RemoteController {
 public:
-    RemoteController();
+    explicit RemoteController();
     ~RemoteController();
 
     void start();

@@ -7,7 +7,7 @@
 
 class TelemetryManager {
 public:
-    TelemetryManager();
+    explicit TelemetryManager();
     ~TelemetryManager();
 
     void start();

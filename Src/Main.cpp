@@ -3,11 +3,10 @@
 
 int main() 
 {
-    ThreadManager manager;
-    manager.startAll();
+    ThreadManager::getInstance().startAll();
 
     std::this_thread::sleep_for(std::chrono::seconds(10)); // Let threads run
 
-    manager.stopAll();
+    ThreadManager::getInstance().stopAll();
     return 0;
 }

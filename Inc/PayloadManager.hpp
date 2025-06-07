@@ -7,7 +7,7 @@
 
 class PayloadManager {
 public:
-    PayloadManager();
+    explicit PayloadManager();
     ~PayloadManager();
 
     void start();

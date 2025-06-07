@@ -2,27 +2,27 @@
 #define SHARED_RESOURCE_HPP
 
 #include <mutex>
+#include <future>
 
+template <typename T>
 class SharedResource {
 public:
-    struct DroneData {
-        double latitude;
-        double longitude;
-        double altitude;
-    };
-
-    void setData(DroneData data) {
+    void setData(T data) {
         std::lock_guard<std::mutex> lock(resourceMutex);
-        droneData = data;
+        sharedData = data;
     }
 
-    DroneData getData() {
+    T getData() {
         std::lock_guard<std::mutex> lock(resourceMutex);
-        return droneData;
+        return sharedData;
+    }
+
+    std::future<T> getDataAsync() {
+        return std::async(std::launch::async, &SharedResource::getData, this).get();
     }
 
 private:
-    DroneData droneData;
+    T sharedData;
     std::mutex resourceMutex;
 };
 

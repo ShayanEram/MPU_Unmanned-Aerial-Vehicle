@@ -7,7 +7,7 @@
 
 class SensorManager {
 public:
-    SensorManager();
+    explicit SensorManager();
     ~SensorManager();
 
     void start();

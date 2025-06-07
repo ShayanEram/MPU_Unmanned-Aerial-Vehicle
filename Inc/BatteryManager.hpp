@@ -7,7 +7,7 @@
 
 class BatteryManager {
 public:
-    BatteryManager();
+    explicit BatteryManager();
     ~BatteryManager();
 
     void start();
