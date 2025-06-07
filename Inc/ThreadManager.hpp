@@ -9,6 +9,10 @@
 #include "SensorManager.hpp"
 #include "TelemetryManager.hpp"
 
+#include "MessageQueue.hpp"
+#include "Observer.hpp"
+#include "SharedResource.hpp"
+
 class ThreadManager final {
 public:
     static ThreadManager& getInstance() {
@@ -27,8 +31,14 @@ protected:
     SensorManager sensorManager;
     TelemetryManager telemetryManager;
 
+    // Shared communication objects
+    MessageQueue<std::string> commandQueueAB;
+    MessageQueue<int> commandQueueCD;
+    SharedResource<float> altitudeData;  // For FlightController & SensorManager
+    Observer<std::string> batteryObserver;  // For BatteryManager & FlightController
+
 private:
-    ThreadManager() = default;
+    ThreadManager();
     ~ThreadManager() = default;
     ThreadManager(const ThreadManager&) = delete;
     ThreadManager& operator=(const ThreadManager&) = delete;

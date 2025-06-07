@@ -1,6 +1,12 @@
 #include "ThreadManager.hpp"
 
-void ThreadManager::startAll() {
+ThreadManager::ThreadManager()
+    : batteryManager(), flightController(), 
+      motorController(), remoteController(), payloadManager(),
+      sensorManager(), telemetryManager() {}
+      
+void ThreadManager::startAll() 
+{
     batteryManager.start();
     flightController.start();
     motorController.start();
@@ -10,7 +16,8 @@ void ThreadManager::startAll() {
     telemetryManager.start();
 }
 
-void ThreadManager::stopAll() {
+void ThreadManager::stopAll() 
+{
     batteryManager.stop();
     flightController.stop();
     motorController.stop();
