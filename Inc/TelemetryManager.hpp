@@ -1,3 +1,9 @@
+/**
+ * @file TelemetryManager.hpp
+ * @brief Header file for the TelemetryManager class.
+ * Provides real-time data on altitude, speed, battery status, and environmental conditions.
+ */
+
 #ifndef TELEMETRY_MANAGER_HPP
 #define TELEMETRY_MANAGER_HPP
 

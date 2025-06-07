@@ -1,3 +1,10 @@
+/**
+ * @file SensorManager.hpp
+ * @brief Header file for SensorManager class.
+ * Includes GPS, IMU (gyroscope, accelerometer), barometer, and magnetometer for precise movement tracking.
+ * 
+ */
+
 #ifndef SENSORMANAGER_HPP
 #define SENSORMANAGER_HPP
 

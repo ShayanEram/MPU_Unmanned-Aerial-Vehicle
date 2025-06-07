@@ -1,3 +1,9 @@
+/**
+ * @file FlightController.hpp
+ * @brief Header file for the FlightController class.
+ * The brain of the aircraft, responsible for stabilization, navigation, and autonomous flight.
+ */
+
 #ifndef FLIGHTCONTROLLER_HPP
 #define FLIGHTCONTROLLER_HPP
 

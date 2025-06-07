@@ -1,3 +1,9 @@
+/**
+ * @file MotorController.hpp
+ * @brief Header file for the MotorController class.
+ * Manages speed and direction of motors.
+ */
+
 #ifndef MOTORCONTROLLER_HPP
 #define MOTORCONTROLLER_HPP
 

@@ -1,3 +1,9 @@
+/**
+ * @file RemoteController.hpp
+ * @brief Header file for the RemoteController class.
+ * Remote control via radio signals, Wi-Fi, or satellite links.
+ */
+
 #ifndef REMOTE_CONTROLLER_HPP
 #define REMOTE_CONTROLLER_HPP
 

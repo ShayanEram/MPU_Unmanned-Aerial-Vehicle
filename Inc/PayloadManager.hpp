@@ -1,3 +1,9 @@
+/**
+ * @file PayloadManager.hpp
+ * @brief Header file for the PayloadManager class.
+ * This module ensures proper handling and deployment of payloads.
+ */
+
 #ifndef PAYLOADMANAGER_HPP
 #define PAYLOADMANAGER_HPP
 
