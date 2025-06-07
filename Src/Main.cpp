@@ -1,11 +1,13 @@
 ﻿#include "main.hpp"
+#include "ThreadManager.hpp"
 
-#include <iostream>
-
-using namespace std;
-
-int main()
+int main() 
 {
-	cout << "Hello, World!" << endl;
-	return 0;
+    ThreadManager manager;
+    manager.startAll();
+
+    std::this_thread::sleep_for(std::chrono::seconds(10)); // Let threads run
+
+    manager.stopAll();
+    return 0;
 }

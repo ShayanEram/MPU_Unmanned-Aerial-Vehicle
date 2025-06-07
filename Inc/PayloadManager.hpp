@@ -1,17 +1,27 @@
 #ifndef PAYLOADMANAGER_HPP
 #define PAYLOADMANAGER_HPP
 
+#include <thread>
+#include <atomic>
+#include <iostream>
+
 class PayloadManager {
 public:
     PayloadManager();
     ~PayloadManager();
 
-    void loadPayload();
-    void unloadPayload();
-    void getPayloadStatus() const;
+    void start();
+    void stop();
+
+protected:
+    // void loadPayload();
+    // void unloadPayload();
+    // void getPayloadStatus() const;
 
 private:
-    // Add private member variables here
+    void runLoop();
+    std::thread moduleThread;
+    std::atomic<bool> running;
 };
 
 #endif // PAYLOADMANAGER_HPP

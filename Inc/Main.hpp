@@ -1,6 +1,8 @@
 ﻿#ifndef MAIN_HPP
 #define MAIN_HPP
 
-// Your declarations go here
+#include <thread>
+#include <atomic>
+#include <iostream>
 
 #endif // MAIN_HPP
