@@ -10,20 +10,40 @@
 #include <thread>
 #include <atomic>
 #include <iostream>
+// #include <afunix.h>
+// #include <sys/types.h>
+// #include <fcntl.h>
+// #include <cstring>
+// #include <winsock2.h>
+// #include <windows.h>
+// #include <ws2tcpip.h>
 
 class RemoteController {
 public:
     explicit RemoteController();
     ~RemoteController();
-
     void start();
     void stop();
 
 protected:
-    // void connect();
-    // void disconnect();
-    // void sendCommand();
-    bool isConnected;
+    struct Command {
+        float throttle;
+        float yaw;
+        float pitch;
+        float roll;
+        bool releasePayload;
+    };
+
+    void startConnection();
+    void stopConnection();
+    Command processCommand(const std::string& command);
+
+    static constexpr int REMOTE_INTERVAL_CHECK_MS = 10;
+
+    static constexpr const char* SOCKET_PATH = "/tmp/remote_controller_socket";
+    bool _isConnected;
+    //SOCKET  server_fd;
+    bool _statusToSend;
 
 private:
     void runLoop();
