@@ -11,12 +11,12 @@
 #include <atomic>
 #include <iostream>
 // #include <afunix.h>
-// #include <sys/types.h>
-// #include <fcntl.h>
-// #include <cstring>
-// #include <winsock2.h>
-// #include <windows.h>
-// #include <ws2tcpip.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <cstring>
+#include <winsock2.h>
+#include <windows.h>
+#include <ws2tcpip.h>
 
 class RemoteController {
 public:
@@ -42,7 +42,7 @@ protected:
 
     static constexpr const char* SOCKET_PATH = "/tmp/remote_controller_socket";
     bool _isConnected;
-    //SOCKET  server_fd;
+    SOCKET  server_fd;
     bool _statusToSend;
 
 private:
