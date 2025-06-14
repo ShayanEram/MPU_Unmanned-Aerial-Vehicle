@@ -66,6 +66,10 @@
         "future": "cpp",
         "coroutine": "cpp",
         "resumable": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "chrono": "cpp",
+        "forward_list": "cpp",
+        "iomanip": "cpp",
+        "sstream": "cpp"
     }
 }
