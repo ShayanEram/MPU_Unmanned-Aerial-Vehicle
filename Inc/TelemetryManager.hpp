@@ -20,10 +20,13 @@ public:
     void stop();
 
 protected:
-    // void initialize();
-    // void update();
-    // void sendData();
+    void updateTelemetryData();
+    void sendTelemetryData();
 
+    static constexpr int TELEMETRY_UPDATE_INTERVAL_MS = 1000;
+
+    std::string _telemetryPacket;
+    
 private:
     void runLoop();
     std::thread moduleThread;

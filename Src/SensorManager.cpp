@@ -26,7 +26,7 @@ void SensorManager::runLoop() {
 
     while (running.load()) 
     {
-        SensorData data;
+        SensorData data = {};
         
         // Read IMU (Gyroscope + Accelerometer)
         // readIMUData(IMU_DEVICE_FILE); // Reads and prints IMU data
