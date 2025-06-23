@@ -9,9 +9,7 @@
 #include "SensorManager.hpp"
 #include "TelemetryManager.hpp"
 
-#include "MessageQueue.hpp"
-#include "Observer.hpp"
-#include "SharedResource.hpp"
+#include "InterData.hpp"
 
 class ThreadManager final {
 public:
@@ -31,11 +29,13 @@ protected:
     SensorManager sensorManager;
     TelemetryManager telemetryManager;
 
-    // Shared communication objects
-    MessageQueue<std::string> commandQueueAB;
-    MessageQueue<int> commandQueueCD;
-    SharedResource<float> altitudeData;  // For FlightController & SensorManager
-    Observer<std::string> batteryObserver;  // For BatteryManager & FlightController
+    /*Shared communication objects: */
+    MessageQueue<BatteryData> batteryFlightQueue;
+    SharedResource<MotorData> motorFlightData;
+    Observer<PayloadData> payloadFlightObserver;
+    SharedResource<RemoteData> remoteFlightData;
+    MessageQueue<SensorData> sensorFlightQueue;
+    Observer<SensorData> telemetrySensorObserver;
 
 private:
     ThreadManager();

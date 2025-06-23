@@ -1,6 +1,18 @@
 #include "FlightController.hpp"
 
-FlightController::FlightController() : running(false) {
+FlightController::FlightController(
+    MessageQueue<BatteryData>& batteryQueue,
+    SharedResource<MotorData>& motorData,
+    Observer<PayloadData>& payloadObserver,
+    SharedResource<RemoteData>& remoteData,
+    MessageQueue<SensorData>& sensorQueue)
+    : _batteryQueue(batteryQueue), 
+    _motorData(motorData),
+    _payloadObserver(payloadObserver), 
+    _remoteData(remoteData),
+    _sensorQueue(sensorQueue), 
+    running(false)
+{
     altitude = 0.0f; // Initialize altitude
 }
 

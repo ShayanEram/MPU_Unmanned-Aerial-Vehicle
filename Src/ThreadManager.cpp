@@ -1,13 +1,20 @@
 #include "ThreadManager.hpp"
 
-ThreadManager::ThreadManager()
-    : flightController(),
-      batteryManager(), 
-      motorController(), 
-      remoteController(), 
-      payloadManager(),
-      sensorManager(), 
-      telemetryManager() {}
+ThreadManager::ThreadManager(): 
+    flightController
+    (
+        batteryFlightQueue,
+        motorFlightData,
+        payloadFlightObserver,
+        remoteFlightData,
+        sensorFlightQueue
+    ),
+    batteryManager(/*batteryFlightQueue*/), 
+    motorController(/*motorFlightData*/), 
+    remoteController(/*remoteFlightData*/), 
+    payloadManager(/*payloadFlightObserver*/),
+    sensorManager(/*sensorFlightQueue*/), 
+    telemetryManager(/*telemetrySensorObserver*/) {}
       
 void ThreadManager::startAll() 
 {
