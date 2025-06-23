@@ -12,9 +12,11 @@
 #include <iostream>
 #include <fstream>
 
+#include "InterData.hpp"
+
 class PayloadManager {
 public:
-    explicit PayloadManager();
+    explicit PayloadManager(Observer<PayloadData>& payloadObserver);
     ~PayloadManager();
     void start();
     void stop();
@@ -45,6 +47,8 @@ private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    Observer<PayloadData>& _payloadObserver;
 };
 
 #endif // PAYLOADMANAGER_HPP

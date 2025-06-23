@@ -15,9 +15,11 @@
 #include <string>
 #include <chrono>
 
+#include "InterData.hpp"
+
 class MotorController {
 public:
-    explicit MotorController();
+    explicit MotorController(SharedResource<MotorData>& motorData);
     ~MotorController();
     void start();
     void stop();
@@ -61,6 +63,8 @@ private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    SharedResource<MotorData>& _motorData;
 };
 
 #endif // MOTORCONTROLLER_HPP

@@ -1,6 +1,6 @@
 #include "TelemetryManager.hpp"
 
-TelemetryManager::TelemetryManager() : running(false) {
+TelemetryManager::TelemetryManager(Observer<SensorData>& telemetryObserver) : _telemetryObserver(telemetryObserver), running(false) {
     _telemetryPacket = "Telemetry Data: Altitude, Speed, Battery, Environment";
 }
 TelemetryManager::~TelemetryManager() {

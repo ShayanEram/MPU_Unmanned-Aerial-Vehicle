@@ -15,15 +15,19 @@
 #include <fstream>
 #include <string>
 
+#include "InterData.hpp"
+
 class SensorManager {
 public:
-    explicit SensorManager();
+    explicit SensorManager(
+        MessageQueue<SensorData>& sensorQueue,
+        Observer<SensorData>& sensorObserver);
     ~SensorManager();
     void start();
     void stop();
 
 protected:
-    struct SensorData 
+    struct SensorReadings
     {
         // IMU (Gyroscope + Accelerometer)
         float accelX, accelY, accelZ;
@@ -45,7 +49,6 @@ protected:
         int batteryPercentage;
     };
 
-
     int readRegister(int file, uint8_t reg);
     void readIMUData(int file);
     void readGPSData();
@@ -64,13 +67,15 @@ protected:
     static constexpr auto BAROMETER_DEVICE_FILE = "/dev/i2c-1"; // Barometer connected via I2C
     static constexpr auto MAGNETOMETER_DEVICE_FILE = "/dev/i2c-1"; // Magnetometer connected via I2C
 
-
     static constexpr int SENSOR_UPDATE_INTERVAL_MS = 100;
 
 private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    MessageQueue<SensorData>& _sensorQueue;
+    Observer<SensorData>& _sensorObserver;
 };
 
 #endif // SENSORMANAGER_HPP

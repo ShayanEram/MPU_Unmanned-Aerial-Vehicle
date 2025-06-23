@@ -1,6 +1,6 @@
 #include "PayloadManager.hpp"
 
-PayloadManager::PayloadManager() : running(false) {
+PayloadManager::PayloadManager(Observer<PayloadData>& payloadObserver) : _payloadObserver(payloadObserver), running(false) {
     _isPayloadLoaded = false;
     _releasePayloadRequested = false;
 }

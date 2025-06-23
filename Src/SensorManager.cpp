@@ -1,6 +1,6 @@
 #include "SensorManager.hpp"
 
-SensorManager::SensorManager() : running(false) {
+SensorManager::SensorManager(MessageQueue<SensorData>& sensorQueue, Observer<SensorData>& sensorObserver) : _sensorQueue(sensorQueue), _sensorObserver(sensorObserver), running(false) {
     // Constructor implementation
 }
 SensorManager::~SensorManager() {
@@ -26,7 +26,7 @@ void SensorManager::runLoop() {
 
     while (running.load()) 
     {
-        SensorData data = {};
+        SensorReadings data = {};
         
         // Read IMU (Gyroscope + Accelerometer)
         // readIMUData(IMU_DEVICE_FILE); // Reads and prints IMU data

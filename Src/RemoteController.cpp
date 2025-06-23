@@ -1,7 +1,7 @@
 #include "RemoteController.hpp"
 #include <string>
 
-RemoteController::RemoteController() : running(false) {
+RemoteController::RemoteController(SharedResource<RemoteData>& remoteData) : _remoteData(remoteData), running(false) {
     _isConnected = false;
 }
 RemoteController::~RemoteController() {

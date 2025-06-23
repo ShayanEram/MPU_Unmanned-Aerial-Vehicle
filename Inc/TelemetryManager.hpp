@@ -11,9 +11,11 @@
 #include <atomic>
 #include <iostream>
 
+#include "InterData.hpp"
+
 class TelemetryManager {
 public:
-    explicit TelemetryManager();
+    explicit TelemetryManager(Observer<SensorData>& telemetryObserver);
     ~TelemetryManager();
 
     void start();
@@ -31,6 +33,8 @@ private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    Observer<SensorData>& _telemetryObserver;
 };
 
 #endif // TELEMETRY_MANAGER_HPP

@@ -1,12 +1,11 @@
 #include "MotorController.hpp"
 
-MotorController::MotorController() : running(false) {
+MotorController::MotorController(SharedResource<MotorData>& motorData) : _motorData(motorData), running(false) {
     _currentSpeed = 0;
     _pitchSpeed = 0;
     _rollSpeed  = 0;
     _yawSpeed   = 0;
 }
-
 MotorController::~MotorController() {
     stop();
 }
@@ -17,7 +16,6 @@ void MotorController::start() {
         moduleThread = std::thread(&MotorController::runLoop, this);
     }
 }
-
 void MotorController::stop() {
     if (running.load()) {
         running.store(false);

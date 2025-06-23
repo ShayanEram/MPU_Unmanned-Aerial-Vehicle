@@ -6,9 +6,11 @@
 #include <iostream>
 #include <fstream>
 
+#include "InterData.hpp"
+
 class BatteryManager {
 public:
-    explicit BatteryManager();
+    explicit BatteryManager(MessageQueue<BatteryData>& batteryQueue);
     ~BatteryManager();
     void start();
     void stop();
@@ -51,6 +53,8 @@ private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    MessageQueue<BatteryData>& _batteryQueue;
 };
 
 #endif // BATTERYMANAGER_HPP

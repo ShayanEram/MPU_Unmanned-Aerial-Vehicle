@@ -9,13 +9,13 @@ ThreadManager::ThreadManager():
         remoteFlightData,
         sensorFlightQueue
     ),
-    batteryManager(/*batteryFlightQueue*/), 
-    motorController(/*motorFlightData*/), 
-    remoteController(/*remoteFlightData*/), 
-    payloadManager(/*payloadFlightObserver*/),
-    sensorManager(/*sensorFlightQueue*/), 
-    telemetryManager(/*telemetrySensorObserver*/) {}
-      
+    batteryManager(batteryFlightQueue), 
+    motorController(motorFlightData), 
+    remoteController(remoteFlightData), 
+    payloadManager(payloadFlightObserver),
+    sensorManager(sensorFlightQueue, telemetrySensorObserver), 
+    telemetryManager(telemetrySensorObserver) {}
+
 void ThreadManager::startAll() 
 {
     batteryManager.start();

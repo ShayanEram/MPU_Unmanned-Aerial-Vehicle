@@ -18,9 +18,11 @@
 #include <windows.h>
 #include <ws2tcpip.h>
 
+#include "InterData.hpp"
+
 class RemoteController {
 public:
-    explicit RemoteController();
+    explicit RemoteController(SharedResource<RemoteData>& _remoteData);
     ~RemoteController();
     void start();
     void stop();
@@ -49,6 +51,8 @@ private:
     void runLoop();
     std::thread moduleThread;
     std::atomic<bool> running;
+
+    SharedResource<RemoteData>& _remoteData;
 };
 
 #endif // REMOTE_CONTROLLER_HPP

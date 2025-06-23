@@ -1,6 +1,6 @@
 #include "BatteryManager.hpp"
 
-BatteryManager::BatteryManager() : running(false) {
+BatteryManager::BatteryManager(MessageQueue<BatteryData>& batteryQueue) : _batteryQueue(batteryQueue), running(false) {
     _voltage = 0.0f;
     _current = 0.0f;
     _temperature = 0.0f;
