@@ -1,12 +1,12 @@
 #include "FlightController.hpp"
 
 FlightController::FlightController(
-    MessageQueue<BatteryData>& batteryQueue,
-    SharedResource<MotorData>& motorData,
-    Observer<PayloadData>& payloadObserver,
+    MessageQueue<BatteryData>&  batteryQueue,
+    SharedResource<MotorData>&  motorData,
+    Observer<PayloadData>&      payloadObserver,
     SharedResource<RemoteData>& remoteData,
-    MessageQueue<SensorData>& sensorQueue)
-    : _batteryQueue(batteryQueue), 
+    MessageQueue<SensorData>&   sensorQueue) :
+    _batteryQueue(batteryQueue), 
     _motorData(motorData),
     _payloadObserver(payloadObserver), 
     _remoteData(remoteData),
