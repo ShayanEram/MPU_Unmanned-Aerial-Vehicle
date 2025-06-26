@@ -13,20 +13,20 @@ FlightController::FlightController(
     _sensorQueue(sensorQueue), 
     running(false)
 {
-    altitude = 0.0f; // Initialize altitude
+    _payloadObserver.addListener([this](const PayloadData& payloadData) {
+        this->onPayloadDataUpdated(payloadData);
+    });
 }
-
 FlightController::~FlightController() {
     stop();
 }
-
+//------------------------------------------------------------------------------------
 void FlightController::start() {
     if (!running.load()) {
         running.store(true);
         moduleThread = std::thread(&FlightController::runLoop, this);
     }
 }
-
 void FlightController::stop() {
     if (running.load()) {
         running.store(false);
@@ -35,13 +35,31 @@ void FlightController::stop() {
         }
     }
 }
-
+//------------------------------------------------------------------------------------
 void FlightController::runLoop() {
     
-    while (running.load()) {
+    std::future<BatteryData> batteryData = {}; 
+    std::future<MotorData> motorData = {};
+    std::future<RemoteData> remoteData = {};
+    std::future<SensorData> sensorData = {};
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Simulate periodic updates
+    while (running.load()) 
+    {
+        batteryData = _batteryQueue.popCommandAsync();
+        motorData = _motorData.getDataAsync();
+        remoteData = _remoteData.getDataAsync();
+        sensorData = _sensorQueue.popCommandAsync();
 
-        std::cout << "FlightController running... Altitude: " << altitude << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(FLIGHT_CONTROLLER_UPDATE_RATE_MS));
+
+        std::cout << "FlightController running" << std::endl;
     }
+}
+//------------------------------------------------------------------------------------
+void FlightController::onPayloadDataUpdated(const PayloadData& payloadData) 
+{
+    std::cout << "Payload action: " << payloadData.action << std::endl;
+    std::cout << "Payload ID: " << payloadData.payloadId << std::endl;
+
+    _payloadCallbackData = payloadData;
 }

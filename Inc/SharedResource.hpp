@@ -18,7 +18,7 @@ public:
     }
 
     std::future<T> getDataAsync() {
-        return std::async(std::launch::async, &SharedResource::getData, this).get();
+        return std::async(std::launch::async, &SharedResource::getData, this);
     }
 
 private:

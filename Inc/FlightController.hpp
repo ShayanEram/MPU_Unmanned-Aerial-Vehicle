@@ -27,10 +27,10 @@ public:
     void stop();
 
 protected:
-    // void update();
-    // void setAltitude(float altitude);
-    // float getAltitude() const;
-    float altitude;
+    void onPayloadDataUpdated(const PayloadData& payloadData);
+    PayloadData _payloadCallbackData = {};
+
+    static constexpr int FLIGHT_CONTROLLER_UPDATE_RATE_MS = 100; // Update rate in milliseconds
 
 private:
     void runLoop();
