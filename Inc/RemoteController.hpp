@@ -10,13 +10,12 @@
 #include <thread>
 #include <atomic>
 #include <iostream>
-// #include <afunix.h>
-#include <sys/types.h>
-#include <fcntl.h>
+
 #include <cstring>
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
+#include <iostream>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include "InterData.hpp"
 
@@ -40,12 +39,14 @@ protected:
     void stopConnection();
     Command processCommand(const std::string& command);
 
+    static constexpr int BUFFER_SIZE = 1024;
     static constexpr int REMOTE_INTERVAL_CHECK_MS = 10;
 
     static constexpr const char* SOCKET_PATH = "/tmp/remote_controller_socket";
     bool _isConnected;
-    SOCKET  server_fd;
+    int  _serverSocket, _clientSocket;
     bool _statusToSend;
+    sockaddr_in _serverAddress;
 
 private:
     void runLoop();

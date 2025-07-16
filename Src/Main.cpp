@@ -1,4 +1,4 @@
-﻿#include "main.hpp"
+﻿#include "Main.hpp"
 #include "ThreadManager.hpp"
 
 int main() 
