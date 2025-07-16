@@ -49,11 +49,11 @@ protected:
         int batteryPercentage;
     };
 
-    int readRegister(int file, uint8_t reg);
-    void readIMUData(int file);
+    int readRegister(std::string file, uint8_t reg);
+    void readIMUData(std::string file);
     void readGPSData();
-    void readBarometerData(int file);
-    void readMagnetometerData(int file);
+    void readBarometerData(std::string file);
+    void readMagnetometerData(std::string file);
 
     static constexpr int MPU6050_ADDR  = 0x68;
     static constexpr int ACCEL_XOUT_H  = 0x3B;

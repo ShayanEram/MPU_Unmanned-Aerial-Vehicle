@@ -1,93 +1,124 @@
-# MPU_Unmanned-Aerial-Vehicle
-This is a project for a UAV systme
+# MPU Unmanned Aerial Vehicle
 
-## Requirements
-### Common
+This project implements the software for an **Unmanned Aerial Vehicle (UAV)**, focusing on modularity, thread-safe communication, and real-time control. The system is designed to manage various components such as the flight controller, payload manager, sensor manager, and telemetry systems.
 
-Errors are printed on stderr.
-The application runs on a Linux-based operating system.
+---
 
-### Server
+## **Requirements**
 
-The server listens on a UNIX socket.
-The path to the socket is provided as a command line argument.
-If an error occurs while listening to the socket, the program stops with a positive error code and a log message explaining the error.
-The server creates the socket if it does not exist.
-The server supports the ‘VERSION’ command.
-It replies to the client with the git string version of the application.
-The “git string” is the full hash of the latest commit the application was compiled against.
-The server replies ‘REJECTED’ if the command is not supported.
+To build and run this project, you will need the following:
 
-### Client
+- **C++ Compiler**: A C++17-compatible compiler (e.g., GCC, Clang, or MSVC).
+- **CMake**: Version 3.15 or higher.
+- **Operating System**: Linux.
+- **Development Tools**: Git for version control and a terminal for running commands.
 
-The client connects on the UNIX socket.
-The path is provided as a command line argument.
-If an error occurs while connecting to the socket, the program stops with a positive error code and a log message explaining the error.
-The client allows sending text-based commands.
-The command is provided as a command line argument.
-The client command results are printed on stdout.
+---
 
-## Installation and Setup
-Before you can build and run the application, you need to install the necessary tools and libraries. Here’s how you can do it:
+## **Installation and Setup**
 
-1. Install CMake: CMake is used for managing the build process of the software. You can install it using the package manager of your Linux distribution. For example, on Ubuntu, you can use the following command:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-repo/MPU_Unmanned-Aerial-Vehicle.git
+   cd MPU_Unmanned-Aerial-Vehicle
+   ```
 
-    $ sudo apt-get install cmake
+2. Install the required dependencies (if any). Ensure that CMake and a compatible compiler are installed on your system.
 
-2. Install GCC: GCC is the GNU Compiler Collection. It includes compilers for various programming languages, including C++. You can install it using the package manager of your Linux distribution. For example, on Ubuntu, you can use the following command:
+3. Configure the project using CMake:
+   ```sh
+   cmake -S . -B build
+   ```
 
-    $ sudo apt-get install build-essential
+---
 
-3. Clone the Repository: Clone this repository to your local machine using the following command:
+## **Building the Application**
 
-    $ git clone ...
+1. Build the project using CMake:
+   ```sh
+   cmake --build build
+   ```
 
-## Building the Application
-After you have installed the necessary tools and libraries, you can build the application using the following steps:
+2. Locate the executables in the [`build/`] directory.
 
-1. Navigate to the Project Directory: Use the cd command to navigate to the project directory:
+3. Run the application:
+   ```sh
+   ./build/UAV
+   ```
 
-    $ cd project-directory
+---
 
-2. Create a Build Directory: Create a new directory named build in the project directory:
+## **Expected Results**
 
-    $ mkdir build
+When you run the application, the following components will be initialized and executed:
 
-3. Navigate to the Build Directory: Use the cd command to navigate to the build directory:
-    
-    $ cd build
+1. **Flight Controller**:
+   - Periodically retrieves data from the battery, motor, remote controller, and sensors using asynchronous mechanisms.
+   - Logs the status of the UAV to the console.
 
-4. Run CMake: Run the cmake command to generate the Makefile:
+2. **Payload Manager**:
+   - Manages payload operations and notifies the flight controller of updates using the `Observer<PayloadData>` mechanism.
+   - Logs payload actions and IDs when updates occur.
 
-    $ cmake ..
+3. **Sensor Manager**:
+   - Collects and processes data from onboard sensors.
+   - Publishes sensor data to a `MessageQueue<SensorData>` for other modules to consume.
 
-5. Build the Application: Run the make command to build the application:
+4. **Telemetry System**:
+   - Sends telemetry data to external systems for monitoring and analysis.
 
-    $ make
+### **Example Output**
+When the application is running, you can expect logs similar to the following:
 
-6. You need to do step 1 to 5 for each CMakelists (2 times in 2 different directories):
-    -server/
-    -client/
-    
-7. After you have built the application, you can run it using the following command:
-    
-    $ cd build
-    
-    $ ./executable arguments
+```plaintext
+FlightController running
+Payload action: Drop
+Payload ID: 42
+FlightController running
+```
 
-    Replace `executable-name` with the name of the server or client executable, and `command-line-arguments` with the appropriate command-line arguments. Run server before client. Replace `/path` with the path where you want to create the socket.
+If an error occurs during execution, the application will log the error and terminate with an appropriate error code.
 
-    For server:
+---
 
-    $ ./server
+## **Project Structure**
 
-    For client:
+```
+build/
+    x64-debug/
+CMakeLists.txt
+CMakePresets.json
+Inc/
+    BatteryManager.hpp
+    FlightController.hpp
+    InterData.hpp
+    main.hpp
+    MessageQueue.hpp
+    MotorController.hpp
+    Observer.hpp
+    PayloadManager.hpp
+    RemoteController.hpp
+    SensorManager.hpp
+    SharedResource.hpp
+    TelemetryManager.hpp
+    ThreadManager.hpp
+README.md
+Src/
+    BatteryManager.cpp
+    FlightController.cpp
+    main.cpp
+    MotorController.cpp
+    PayloadManager.cpp
+    RemoteController.cpp
+    SensorManager.cpp
+    ...
+```
 
-    $ ./client
-
-## Expected Results
-When you run the server, it listens on the specified UNIX socket and waits for connections from clients. When a client connects and sends a command, the server processes the command and sends a response back to the client. The client then prints the response on stdout.
-
-If the client sends the ‘VERSION’ command, the server responds with the git string version of the application. If the client sends an unsupported command, the server responds with ‘REJECTED’.
-
-If an error occurs while the server is listening to the socket or the client is connecting to the socket, the program stops with a positive error code and a log message explaining the error.
+### **Key Components**
+- **Flight Controller**: Manages UAV operations, including motor control, battery monitoring, and remote commands.
+- **Payload Manager**: Handles payload operations and communicates updates to the flight controller.
+- **Sensor Manager**: Collects and processes sensor data for use by other modules.
+- **Shared Resources and Communication**:
+  - `SharedResource`: Provides thread-safe access to shared data.
+  - `MessageQueue`: Implements a thread-safe queue for inter-thread communication.
+  - `Observer`: Implements the observer pattern for event-driven communication between modules.

@@ -28,22 +28,20 @@ void SensorManager::runLoop() {
     {
         SensorReadings data = {};
         
-        // Read IMU (Gyroscope + Accelerometer)
-        // readIMUData(IMU_DEVICE_FILE); // Reads and prints IMU data
-        // data.accelX = readRegister(IMU_DEVICE_FILE, ACCEL_XOUT_H);
-        // data.gyroX = readRegister(IMU_DEVICE_FILE, GYRO_XOUT_H);
+        readIMUData(IMU_DEVICE_FILE); // Reads and prints IMU data
+        data.accelX = static_cast<float>(readRegister(IMU_DEVICE_FILE, ACCEL_XOUT_H));
+        data.gyroX = static_cast<float>(readRegister(IMU_DEVICE_FILE, GYRO_XOUT_H));
 
-        // // Read GPS
-        // readGPSData(); // Reads and prints GPS data
-        // // GPS data is printed directly, update if needed
+        // Read GPS
+        readGPSData(); // Reads and prints GPS data
 
-        // // Read Barometer (Altitude)
-        // readBarometerData(BAROMETER_DEVICE_FILE); // Reads and prints barometer pressure
-        // data.altitude = readRegister(BAROMETER_DEVICE_FILE, PRESSURE_REG);
+        // Read Barometer (Altitude)
+        readBarometerData(BAROMETER_DEVICE_FILE); // Reads and prints barometer pressure
+        data.altitude = static_cast<float>(readRegister(BAROMETER_DEVICE_FILE, PRESSURE_REG));
 
-        // // Read Magnetometer (Compass Heading)
-        // readMagnetometerData(MAGNETOMETER_DEVICE_FILE); // Reads and prints compass heading
-        // data.heading = readRegister(MAGNETOMETER_DEVICE_FILE, MAG_XOUT_H);
+        // Read Magnetometer (Compass Heading)
+        readMagnetometerData(MAGNETOMETER_DEVICE_FILE); // Reads and prints compass heading
+        data.heading = static_cast<float>(readRegister(MAGNETOMETER_DEVICE_FILE, MAG_XOUT_H));
 
         std::this_thread::sleep_for(std::chrono::milliseconds(SENSOR_UPDATE_INTERVAL_MS));
 
@@ -51,10 +49,10 @@ void SensorManager::runLoop() {
     }
 }
 //------------------------------------------------------------------------------------
-int SensorManager::readRegister(int file, uint8_t reg)
+int SensorManager::readRegister(std::string file, uint8_t reg)
 {
     std::fstream fs;
-    fs.open("/dev/i2c-" + std::to_string(file), std::ios::in | std::ios::out);
+    fs.open(file, std::ios::in | std::ios::out);
     if (!fs.is_open()) {
         throw std::runtime_error("Failed to open I2C device");
     }
@@ -65,7 +63,7 @@ int SensorManager::readRegister(int file, uint8_t reg)
     fs.close();
     return value;
 }
-void SensorManager::readIMUData(int file)
+void SensorManager::readIMUData(std::string file)
 {
     int accelX = (readRegister(file, ACCEL_XOUT_H) << 8) | readRegister(file, ACCEL_XOUT_H + 1);
     int gyroX = (readRegister(file, GYRO_XOUT_H) << 8) | readRegister(file, GYRO_XOUT_H + 1);
@@ -84,10 +82,10 @@ void SensorManager::readGPSData()
         }
     }
 }
-void SensorManager::readBarometerData(int file)
+void SensorManager::readBarometerData(std::string file)
 {
     std::fstream barometerFile;
-    barometerFile.open("/dev/i2c-" + std::to_string(file), std::ios::in | std::ios::out);
+    barometerFile.open(file, std::ios::in | std::ios::out);
     if (!barometerFile.is_open()) {
         throw std::runtime_error("Failed to open Barometer I2C device");
     }
@@ -100,7 +98,7 @@ void SensorManager::readBarometerData(int file)
     int pressure = (buffer[0] << 12) | (buffer[1] << 4) | (buffer[2] >> 4);
     std::cout << "Barometer Pressure: " << pressure << " Pa" << std::endl;
 }
-void SensorManager::readMagnetometerData(int file)
+void SensorManager::readMagnetometerData(std::string file)
 {
     int magX = (readRegister(file, MAG_XOUT_H) << 8) | readRegister(file, MAG_XOUT_H + 1);
     std::cout << "Magnetometer Heading: " << magX << std::endl;
