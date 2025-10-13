@@ -13,6 +13,8 @@ To build and run this project, you will need the following:
 - **Operating System**: Linux.
 - **Development Tools**: Git for version control and a terminal for running commands.
 
+- ***IMPORTANT***: All the Yocto project and build files are in a seperate git repo!!! ShayanEram/MPU_Linux-Drivers
+
 ---
 
 ## **Installation and Setup**
