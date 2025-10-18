@@ -10,13 +10,16 @@ file(GLOB HEADER_FILES "Inc/*.hpp")
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Inc)
 
-# Add GoogleTest
-add_subdirectory(../googletest googletest-build)
-file(GLOB TEST_SOURCES "Tests/*.cpp")
+option(BUILD_TESTS "Build unit tests" OFF)
+if(BUILD_TESTS)
+    # Add GoogleTest
+    add_subdirectory(../googletest googletest-build)
+    file(GLOB TEST_SOURCES "Tests/*.cpp")
 
-add_executable(UAV_tests ${TEST_SOURCES})
-target_include_directories(UAV_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Inc)
-target_link_libraries(UAV_tests gtest gtest_main pthread)
+    add_executable(UAV_tests ${TEST_SOURCES})
+    target_include_directories(UAV_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Inc)
+    target_link_libraries(UAV_tests gtest gtest_main pthread)
 
-enable_testing()
-add_test(NAME UAV_tests COMMAND UAV_tests)
+    enable_testing()
+    add_test(NAME UAV_tests COMMAND UAV_tests)
+endif()
