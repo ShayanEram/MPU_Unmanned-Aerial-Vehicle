@@ -2,6 +2,8 @@
 
 This project implements the software for an **Unmanned Aerial Vehicle (UAV)**, focusing on modularity, thread-safe communication, and real-time control. The system is designed to manage various components such as the flight controller, payload manager, sensor manager, and telemetry systems.
 
+This project is a recipe (`uav.bb`) for the [UAV-Yocto](https://github.com/ShayanEram/MPU_UAV-Yocto) project.
+
 ---
 
 ## **Requirements**
@@ -10,10 +12,8 @@ To build and run this project, you will need the following:
 
 - **C++ Compiler**: A C++17-compatible compiler (e.g., GCC, Clang, or MSVC).
 - **CMake**: Version 3.15 or higher.
-- **Operating System**: Linux.
+- **Operating System**: Embedded Linux (Custom Yocto build).
 - **Development Tools**: Git for version control and a terminal for running commands.
-
-- ***IMPORTANT***: All the Yocto project and build files are in a seperate git repo!!! ShayanEram/MPU_Linux-Drivers
 
 ---
 
@@ -78,8 +78,6 @@ Payload action: Drop
 Payload ID: 42
 FlightController running
 ```
-
-If an error occurs during execution, the application will log the error and terminate with an appropriate error code.
 
 ---
 
