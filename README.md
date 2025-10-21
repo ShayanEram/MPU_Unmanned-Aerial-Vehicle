@@ -36,18 +36,16 @@ To build and run this project, you will need the following:
 
 ## **Building the Application**
 
-1. Build the project using CMake:
-   ```sh
-   cmake --build build
-   ```
-
-2. Locate the executables in the [`build/`] directory.
-
-3. Run the application:
-   ```sh
-   ./build/UAV
-   ```
-
+### CMD
+    cd MPU_Gateway
+    cmake --preset Debug (Release)
+    cd build
+    cmake ..
+    make
+### VS Code
+    cmake --preset Debug (Release)
+    Build
+    Run
 ---
 
 ## **Expected Results**
