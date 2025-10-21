@@ -14,25 +14,41 @@ include_directories(
 )
 
 # Source files
-file(GLOB SRC_FILES
+file(GLOB_RECURSE SRC_FILES
     ${CMAKE_SOURCE_DIR}/Src/*.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-
+target_include_directories(${PROJECT_NAME} PUBLIC
+    ${CMAKE_SOURCE_DIR}/Inc
+    ${CMAKE_SOURCE_DIR}/Inc/Utils
+)
 
 # Unit tests ##########################################
 option(BUILD_TESTS "Enable building unit tests" OFF)
 
 if(BUILD_TESTS)
     # Add GoogleTest
-    add_subdirectory(../googletest googletest-build)
-    file(GLOB TEST_SOURCES "Tests/*.cpp")
+    add_subdirectory(${CMAKE_SOURCE_DIR}/../googletest googletest-build)
+    
+    file(GLOB_RECURSE TEST_SOURCES
+        ${CMAKE_SOURCE_DIR}/Tests/*.cpp
+    )
 
-    add_executable(UAV_tests ${TEST_SOURCES})
-    target_include_directories(UAV_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Inc)
-    target_link_libraries(UAV_tests gtest gtest_main pthread)
+    add_executable(${PROJECT_NAME}_tests ${TEST_SOURCES})
+
+    target_include_directories(${PROJECT_NAME}_tests PUBLIC
+        ${CMAKE_SOURCE_DIR}/Inc
+        ${CMAKE_SOURCE_DIR}/Inc/Utils
+    )
+
+    target_link_libraries(${PROJECT_NAME}_tests
+        gtest
+        gtest_main
+        pthread
+    )
 
     enable_testing()
-    add_test(NAME UAV_tests COMMAND UAV_tests)
+    add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+
 endif()
