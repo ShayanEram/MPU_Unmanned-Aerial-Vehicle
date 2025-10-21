@@ -7,12 +7,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Include directories
-include_directories(
-    ${CMAKE_SOURCE_DIR}/Inc
-    ${CMAKE_SOURCE_DIR}/Inc/Utils
-)
-
 # Source files
 file(GLOB_RECURSE SRC_FILES
     ${CMAKE_SOURCE_DIR}/Src/*.cpp
