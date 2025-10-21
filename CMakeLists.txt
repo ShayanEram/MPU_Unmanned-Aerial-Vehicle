@@ -1,16 +1,29 @@
 ﻿cmake_minimum_required(VERSION 3.10)
 project(UAV)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-file(GLOB SOURCE_FILES "Src/*.cpp")
-file(GLOB HEADER_FILES "Inc/*.hpp")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Inc)
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/Inc
+    ${CMAKE_SOURCE_DIR}/Inc/Utils
+)
 
-option(BUILD_TESTS "Build unit tests" OFF)
+# Source files
+file(GLOB SRC_FILES
+    ${CMAKE_SOURCE_DIR}/Src/*.cpp
+)
+
+add_executable(${PROJECT_NAME} ${SRC_FILES})
+
+
+# Unit tests ##########################################
+option(BUILD_TESTS "Enable building unit tests" OFF)
+
 if(BUILD_TESTS)
     # Add GoogleTest
     add_subdirectory(../googletest googletest-build)
